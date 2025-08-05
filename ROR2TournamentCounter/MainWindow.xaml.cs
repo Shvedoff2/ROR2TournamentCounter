@@ -14,8 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Windows.Threading;
-using WpfAnimatedGif;
 using System.Windows.Media.Animation;
+using System.Diagnostics;
 
 namespace ROR2TournamentCounter
 {
@@ -23,10 +23,81 @@ namespace ROR2TournamentCounter
     {
         private const double BaseFontSize = 50;
         private const int BaseCharLimit = 8;
+        private DispatcherTimer displayTimer;
+        private Stopwatch stopwatch;
+        private bool isRunning;
         public MainWindow()
         {
             InitializeComponent();
+            InitializeTimer();
             Survivor.SelectedIndex = 0;
+        }
+        private void InitializeTimer()
+        {
+            stopwatch = new Stopwatch();
+            displayTimer = new DispatcherTimer();
+            displayTimer.Interval = TimeSpan.FromMilliseconds(20);
+            displayTimer.Tick += DisplayTimer_Tick;
+
+            isRunning = false;
+            UpdateTimeDisplay();
+        }
+
+        private void DisplayTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateTimeDisplay();
+        }
+
+        private void UpdateTimeDisplay()
+        {
+            var elapsed = stopwatch.Elapsed;
+            int totalMinutes = (int)elapsed.TotalMinutes;
+            int seconds = elapsed.Seconds;
+            int milliseconds = elapsed.Milliseconds / 10;
+            string fullTime = $"{totalMinutes:D2}:{seconds:D2}.{milliseconds:D2}";
+            TimeDisplay.Text = fullTime;
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isRunning)
+            {
+                stopwatch.Start();
+                displayTimer.Start();
+                isRunning = true;
+                StartButton.IsEnabled = false;
+                StopButton.IsEnabled = true;
+            }
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isRunning)
+            {
+                stopwatch.Stop();
+                displayTimer.Stop();
+                isRunning = false;
+                StartButton.IsEnabled = true;
+                StopButton.IsEnabled = false;
+            }
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            stopwatch.Stop();
+            displayTimer.Stop();
+            isRunning = false;
+
+            stopwatch.Reset();
+            UpdateTimeDisplay();
+
+            StartButton.IsEnabled = true;
+            StopButton.IsEnabled = true;
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            displayTimer?.Stop();
+            base.OnClosed(e);
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -245,6 +316,43 @@ namespace ROR2TournamentCounter
             // Применяем цвет к рамке
             SurvivorRect.Stroke = new SolidColorBrush(survivorColor);
             SurvivorPolygonMask.Fill = new SolidColorBrush(survivorColor);
+        }
+
+        private void TimeDisplay_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string timeText = TimeDisplay.Text;
+            if (timeText.Contains("."))
+            {
+                string[] parts = timeText.Split('.');
+                MinutesSecondsRun.Text = parts[0];
+                DotMillisecondsRun.Text = "." + parts[1];
+                string minutesPart = parts[0].Split(':')[0];
+                if (minutesPart.Length >= 3)
+                {
+                    TimeDisplayed.FontSize = 30;
+                }
+                else
+                {
+                    TimeDisplayed.FontSize = 35;
+                }
+            }
+            else
+            {
+                MinutesSecondsRun.Text = timeText;
+                DotMillisecondsRun.Text = ".00";
+                if (timeText.Contains(":"))
+                {
+                    string minutesPart = timeText.Split(':')[0];
+                    if (minutesPart.Length >= 3)
+                    {
+                        TimeDisplayed.FontSize = 30;
+                    }
+                    else
+                    {
+                        TimeDisplayed.FontSize = 35;
+                    }
+                }
+            }
         }
     }
 
