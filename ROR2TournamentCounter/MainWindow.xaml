@@ -5,125 +5,138 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ROR2TournamentCounter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1200"
+        Title="MainWindow" Height="700" Width="1080"
         AllowsTransparency="True" WindowStyle="None" Background="Transparent"
         Loaded="Window_Loaded">
     <Grid Background="Transparent">
-        <Grid Height="300" VerticalAlignment="Top">
+        <Grid Height="390" VerticalAlignment="Top">
             <Grid>
-                
-                <Canvas Width="300" Height="200">
-                    <Polygon Points="-250,50 50,50 50,5 70,-15 230,-15 250,5 250,50 550,50 550,150 250,150 225,150 150,225 75,150 -250,150"
-             Fill="#70000000"/>
+
+                <Canvas Width="390" Height="260">
+                    <Polygon Points="-325,65 65,65 65,5 91,-20 299,-20 325,5 325,65 715,65 715,195 325,195 292.5,195 195,292.5 97.5,195 -325,195"
+     Fill="#70000000"/>
                 </Canvas>
-                <TextBlock Text="0" x:Name="CountPlayer1" Style="{DynamicResource TBBlue}" FontSize="70" Width="37" Margin="0,0,140,178" Height="60"/>
-                <TextBlock Text="0" x:Name="CountPlayer2" Style="{DynamicResource TBBlue}" FontSize="70" Width="37" Margin="140,0,0,178" Height="60"/>
-                <StackPanel Height="90" Width="250" Margin="0,0,525,0">
-                    <TextBlock Text="Название турнира" x:Name="TournamentNameTB" Style="{DynamicResource TBBlue}" FontSize="25" Width="250" Height="27"/>
+                <TextBlock TextAlignment="Center" Text="0" x:Name="CountPlayer1" Style="{DynamicResource TBBlue}" FontSize="91" Width="48" Margin="0,0,182,231" Height="78"/>
+                <TextBlock TextAlignment="Center" Text="0" x:Name="CountPlayer2" Style="{DynamicResource TBBlue}" FontSize="91" Width="48" Margin="182,0,0,231" Height="78"/>
+                <StackPanel Height="117" Width="325" Margin="0,0,682,0">
+                    <TextBlock Text="Название турнира" x:Name="TournamentNameTB" Style="{DynamicResource TBBlue}" FontSize="33" Width="325" Height="35"/>
                     <TextBox Text="Ник 1" x:Name="Nickname1Player" Style="{DynamicResource TBNick}" IsReadOnly="True" TextChanged="Nickname1Player_TextChanged" TextAlignment="Center"/>
                 </StackPanel >
-                <StackPanel Height="90" Width="250" Margin="525,0,0,0">
-                    <TextBlock Text="Сид:" x:Name="SeedTB" Style="{DynamicResource TBBlue}" FontSize="30" Width="250" TextAlignment="Right" Height="27"/>
+                <StackPanel Height="117" Width="325" Margin="682,0,0,0">
+                    <TextBlock Text="Сид:" x:Name="SeedTB" Style="{DynamicResource TBBlue}" FontSize="39" Width="325" TextAlignment="Right" Height="35"/>
                     <TextBox Text="Ник 2"  x:Name="Nickname2Player" Style="{DynamicResource TBNick}" TextAlignment="Center" IsReadOnly="True" TextChanged="Nickname2Player_TextChanged"/>
                 </StackPanel>
-                <Border Background="#70FFFFFF" Height="3" Width="350" Margin="0,0,450,103"/>
-                <Border Background="#70FFFFFF" Height="3" Width="322" Margin="0,103,478,0"/>
-                <Border Background="#70FFFFFF" Height="3" Width="350" Margin="450,0,0,103"/>
-                <Border Background="#70FFFFFF" Height="3" Width="322" Margin="478,103,0,0"/>
-                <Border Background="#70FFFFFF" Height="106" Width="3" Margin="803,0,0,0"/>
-                <Border Background="#70FFFFFF" Height="106" Width="3" Margin="0,0,803,0"/>
-                <Border Background="#FFFFFF" Height="9" Width="3" Margin="0,0,803,97"/>
-                <Border Background="#FFFFFF" Height="3" Width="6" Margin="0,0,794,103"/>
-                <Border Background="#FFFFFF" Height="9" Width="3" Margin="0,97,803,0"/>
-                <Border Background="#FFFFFF" Height="3" Width="6" Margin="0,103,794,0"/>
-                <Border Background="#FFFFFF" Height="9" Width="3" Margin="803,0,0,97"/>
-                <Border Background="#FFFFFF" Height="3" Width="6" Margin="794,0,0,103"/>
-                <Border Background="#FFFFFF" Height="9" Width="3" Margin="803,97,0,0"/>
-                <Border Background="#FFFFFF" Height="3" Width="6" Margin="794,103,0,0"/>
-                <Canvas Width="250" Height="275">
-                    <Polygon Fill="#70FFFFFF" Points="125,267 47,190.5 47,187.5 50,187.5 125,262.5"/>
-                    <Polygon Fill="#70FFFFFF" Points="125,267 203,190.5 203,187.5 200,187.5 125,262.5"/>
+                <Border Background="#70FFFFFF" Height="4" Width="455" Margin="0,0,585,134"/>
+                <Border Background="#70FFFFFF" Height="4" Width="419" Margin="0,134,621,0"/>
+                <Border Background="#70FFFFFF" Height="4" Width="455" Margin="585,0,0,134"/>
+                <Border Background="#70FFFFFF" Height="4" Width="419" Margin="621,134,0,0"/>
+                <Border Background="#70FFFFFF" Height="138" Width="4" Margin="1044,0,0,0"/>
+                <Border Background="#70FFFFFF" Height="138" Width="4" Margin="0,0,1044,0"/>
+                <Border Background="#FFFFFF" Height="12" Width="4" Margin="0,0,1044,126"/>
+                <Border Background="#FFFFFF" Height="4" Width="8" Margin="0,0,1032,134"/>
+                <Border Background="#FFFFFF" Height="12" Width="4" Margin="0,126,1044,0"/>
+                <Border Background="#FFFFFF" Height="4" Width="8" Margin="0,134,1032,0"/>
+                <Border Background="#FFFFFF" Height="12" Width="4" Margin="1044,0,0,126"/>
+                <Border Background="#FFFFFF" Height="4" Width="8" Margin="1032,0,0,134"/>
+                <Border Background="#FFFFFF" Height="12" Width="4" Margin="1044,126,0,0"/>
+                <Border Background="#FFFFFF" Height="4" Width="8" Margin="1032,134,0,0"/>
+                <Canvas Width="325" Height="358">
+                    <Polygon Fill="#70FFFFFF" Points="162.5,347 61,248 61,244 65,244 162.5,341"/>
+                    <Polygon Fill="#70FFFFFF" Points="162.5,347 264,248 264,244 260,244 162.5,341"/>
                 </Canvas>
-                <Image Height="190" Width="190">
+                <Image Height="247" Width="247">
                     <Image.OpacityMask>
                         <ImageBrush ImageSource="Resources/Images/pattern.png"/>
                     </Image.OpacityMask>
                 </Image>
-                <Rectangle x:Name="SurvivorRect" Width="150" Height="150" Fill="Transparent" Stroke="#e7b44a" StrokeThickness="10">
+                <Rectangle x:Name="SurvivorRect" Width="195" Height="195" Fill="Transparent" Stroke="#e7b44a" StrokeThickness="13">
                     <Rectangle.RenderTransform>
-                        <RotateTransform Angle="45" CenterX="75" CenterY="75"/>
+                        <RotateTransform Angle="45" CenterX="97.5" CenterY="97.5"/>
                     </Rectangle.RenderTransform>
                 </Rectangle>
-                <Polygon x:Name="SurvivorPolygonMask" Fill="#e7b44a" Points="95,0 190,96 95,190 0,95" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Polygon x:Name="SurvivorPolygonMask" Fill="#e7b44a" Points="123.5,0 247,125 123.5,247 0,124" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Polygon.OpacityMask>
-                        <ImageBrush x:Name="PatternBrush" ImageSource="Resources/Images/pattern.png" Stretch="None" TileMode="Tile" Viewport="0,0,2460,190" ViewportUnits="Absolute">
+                        <ImageBrush x:Name="PatternBrush" ImageSource="Resources/Images/pattern.png" Stretch="None" TileMode="Tile" Viewport="0,0,6700,250" ViewportUnits="Absolute">
                             <ImageBrush.RelativeTransform>
                                 <TransformGroup x:Name="MaskTransformGroup">
-                                    <ScaleTransform ScaleX="1.1" ScaleY="1.1" CenterX="0.5" CenterY="0.5"/>
                                     <TranslateTransform x:Name="MaskTranslateTransform" X="0" Y="0"/>
                                 </TransformGroup>
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Polygon.OpacityMask>
                 </Polygon>
-                <Rectangle Width="150" Height="150" Fill="Transparent" Stroke="#70000000" StrokeThickness="10">
+                <Rectangle Width="195" Height="195" Fill="Transparent" Stroke="#70000000" StrokeThickness="13">
                     <Rectangle.RenderTransform>
-                        <RotateTransform Angle="45" CenterX="75" CenterY="75"/>
+                        <RotateTransform Angle="45" CenterX="97.5" CenterY="97.5"/>
                     </Rectangle.RenderTransform>
                 </Rectangle>
                 <Canvas HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Polygon Fill="#70000000" Points="92,0 0,-92 -92,0 0,92" />
+                    <Polygon Fill="#70000000" Points="119.55,0 0,-119.55 -119.55,0 0,119.55" />
                 </Canvas>
-                <Image x:Name="SurvivorPic" Source="Resources/Images/Commando.png" Height="90" Width="90"/>
-                <Grid Margin="696,0,0,156" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="110">
+                <Image x:Name="SurvivorPic" Source="Resources/Images/Commando.png" Height="117" Width="117"/>
+                <Grid Margin="899,0,0,189" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="150">
                     <Canvas>
-                        <Polygon Fill="#70000000" Points="0,50 0,0 100,0 110,10 110,50"/>
+                        <Polygon Fill="#70000000" Points="0,50 0,0 140,0 150,11 150,50"/>
                     </Canvas>
-                    <TextBlock Width="97" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="TimeDisplayed" Style="{DynamicResource TBBlue}" FontSize="35"><Run x:Name="MinutesSecondsRun" Text="00:00"/><Run x:Name="DotMillisecondsRun" Text=".00" FontSize="15" BaselineAlignment="Top" Typography.Variants="Superscript"/></TextBlock>
+                    <TextBlock Height="50" Width="132" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="TimeDisplayed" Style="{DynamicResource TBBlue}" FontSize="48"><Run x:Name="MinutesSecondsRun" Text="00:00"/><Run x:Name="DotMillisecondsRun" Text=".00" FontSize="20" BaselineAlignment="Top" Typography.Variants="Superscript"/></TextBlock>
+                </Grid>
+                <Grid Margin="0,0,905,158" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="143">
+                    <Canvas>
+                        <Polygon Fill="#70000000" Points="0,20 0,7 7,0 143,0 143,20"/>
+                    </Canvas>
+                    <TextBlock HorizontalAlignment="Center" Text="program by shvedoff2" VerticalAlignment="Center" Style="{DynamicResource TBBlue}" FontSize="15"/>
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Height="300" VerticalAlignment="Bottom" Background="White" MouseDown="Navigation_MouseDown">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid x:Name="Navigation">
-                <Button x:Name="MinButton" Width="30" Content="_" Margin="0,0,30,0" HorizontalAlignment="Right"/>
-                <Button x:Name="CloseButton" Width="30" Content="X" HorizontalAlignment="Right" Click="CloseButton_Click"/>
+        <Grid Height="300" Width="1080" VerticalAlignment="Bottom" Background="#70000000" MouseDown="Navigation_MouseDown">
+            <Grid x:Name="Navigation" VerticalAlignment="Top" Margin="0,3,3,0">
+                <Button x:Name="MinButton" Width="30" Height="20" Content="_" Margin="0,0,30,0" HorizontalAlignment="Right" Click="MinButton_Click" FontWeight="UltraBold" Style="{DynamicResource Btn}"/>
+                <Button x:Name="CloseButton" Width="30" Height="20" Content="❌" HorizontalAlignment="Right" Click="CloseButton_Click" Style="{DynamicResource Btn}"/>
             </Grid>
-            <StackPanel Height="200" Width="300" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Row="1">
-                <StackPanel Height="100" x:Name="Player1">
-                    <Label Content="Игрок 1:"/>
-                    <TextBlock Text="Ник:" Margin="20,0,0,0"/>
-                    <TextBox x:Name="Nickname1" Margin="20,0,0,0" TextChanged="Nickname1_TextChanged" MaxLength="16"/>
-                    <TextBlock Text="Счёт:" Margin="20,0,0,0"/>
+            <Border Height="300" Width="3" Background="#70FFFFFF" HorizontalAlignment="Left"/>
+            <Border Height="300" Width="3" Background="#70FFFFFF" HorizontalAlignment="Right"/>
+            <Border Height="3" Width="1074" Background="#70FFFFFF" VerticalAlignment="Top"/>
+            <Border Height="3" Width="1074" Background="#70FFFFFF" VerticalAlignment="Bottom"/>
+            <Border Height="9" Width="3" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Border Height="3" Width="6" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,0,0,0"/>
+            <Border Height="9" Width="3" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+            <Border Height="3" Width="6" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="3,0,0,0"/>
+            <Border Height="9" Width="3" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <Border Height="3" Width="6" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,3,0"/>
+            <Border Height="9" Width="3" Background="White" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            <Border Height="3" Width="6" Background="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,3,0"/>
+            <StackPanel Height="205" Width="300" HorizontalAlignment="Left" Margin="20,0,0,0">
+                <StackPanel  x:Name="Player1">
+                    <Label Content="Игрок 1:" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                    <TextBlock Text="Ник:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                    <TextBox x:Name="Nickname1" Margin="20,0,0,0" TextChanged="Nickname1_TextChanged" MaxLength="16" FontSize="15" Style="{DynamicResource TBNick}" Height="20" Width="200" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Счёт:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
                     <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-                        <Button Content="&lt;" x:Name="DecrementButton1" Click="DecrementButton1_Click"/>
-                        <TextBox x:Name="Count1" Width="50" Text="0" TextAlignment="Center" TextChanged="Count1_TextChanged" IsEnabled="False"/>
-                        <Button Content="&gt;" x:Name="IncrementButton1" Click="IncrementButton1_Click"/>
+                        <Button Content="&lt;" x:Name="DecrementButton1" Click="DecrementButton1_Click" Style="{DynamicResource Btn}" FontSize="18" Width="20"/>
+                        <TextBox x:Name="Count1" Width="50" Height="21" Text="0" TextAlignment="Center" TextChanged="Count1_TextChanged" IsReadOnly="True" FontSize="17" Style="{DynamicResource TBNick}"/>
+                        <Button Content="&gt;" x:Name="IncrementButton1" Click="IncrementButton1_Click" Style="{DynamicResource Btn}" FontSize="18" Width="20"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Height="100" x:Name="Player2">
-                    <Label Content="Игрок 2:"/>
-                    <TextBlock Text="Ник:" Margin="20,0,0,0"/>
-                    <TextBox x:Name="Nickname2" Margin="20,0,0,0" TextChanged="Nickname2_TextChanged" MaxLength="16"/>
-                    <TextBlock Text="Счёт:" Margin="20,0,0,0"/>
+                <StackPanel x:Name="Player2">
+                    <Label Content="Игрок 2:" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                    <TextBlock Text="Ник:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                    <TextBox x:Name="Nickname2" Margin="20,0,0,0" TextChanged="Nickname2_TextChanged" MaxLength="16" FontSize="15" Style="{DynamicResource TBNick}" Height="20" Width="200" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Счёт:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
                     <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-                        <Button Content="&lt;" x:Name="DecrementButton2" Click="DecrementButton2_Click"/>
-                        <TextBox x:Name="Count2" Width="50" Text="0" TextAlignment="Center" TextChanged="Count2_TextChanged" IsEnabled="False"/>
-                        <Button Content="&gt;" x:Name="IncrementButton2" Click="IncrementButton2_Click"/>
+                        <Button Content="&lt;" x:Name="DecrementButton2" Click="DecrementButton2_Click" Style="{DynamicResource Btn}" FontSize="18" Width="20"/>
+                        <TextBox x:Name="Count2" Width="50" Height="21" Text="0" TextAlignment="Center" TextChanged="Count2_TextChanged" IsReadOnly="True" FontSize="17" Style="{DynamicResource TBNick}"/>
+                        <Button Content="&gt;" x:Name="IncrementButton2" Click="IncrementButton2_Click" Style="{DynamicResource Btn}" FontSize="18" Width="20"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Grid.Row="1" x:Name="TournamentInfo" Width="300" Height="200">
-                <Label Content="Информация о турнире:"/>
-                <TextBlock Text="Название турнира:" Margin="20,0,0,0"/>
-                <TextBox x:Name="TournamentName" Margin="20,0,0,0" TextChanged="TournamentName_TextChanged" MaxLength="18"/>
-                <TextBlock Text="Сид:" Margin="20,0,0,0"/>
-                <TextBox x:Name="Seed" Margin="20,0,0,0" TextChanged="Seed_TextChanged" MaxLength="10"/>
-                <TextBlock Text="Выживший:" Margin="20,0,0,0"/>
-                <ComboBox x:Name="Survivor" Margin="20,0,0,0" SelectionChanged="Survivor_SelectionChanged">
+            <StackPanel Grid.Row="1" x:Name="TournamentInfo" Width="300" Height="150">
+                <Label Content="Информация о турнире:" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <TextBlock Text="Название турнира:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <TextBox x:Name="TournamentName" Margin="20,0,0,0" TextChanged="TournamentName_TextChanged" MaxLength="18" FontSize="15" Style="{DynamicResource TBNick}" Height="20" Width="200" HorizontalAlignment="Left"/>
+                <TextBlock Text="Сид:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <TextBox x:Name="Seed" Margin="20,0,0,0" TextChanged="Seed_TextChanged" MaxLength="10" FontSize="15" Style="{DynamicResource TBNick}" Height="20" Width="200" HorizontalAlignment="Left"/>
+                <TextBlock Text="Выживший:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <ComboBox x:Name="Survivor" Margin="20,0,0,0" SelectionChanged="Survivor_SelectionChanged" FontSize="15" Width="200" HorizontalAlignment="Left" Style="{StaticResource ComboBoxStyle}" Foreground="White">
                     <ComboBoxItem Content="Commando"/>
                     <ComboBoxItem Content="Huntress"/>
                     <ComboBoxItem Content="Bandit"/>
@@ -143,24 +156,22 @@
                     <ComboBoxItem Content="Heretic"/>
                 </ComboBox>
             </StackPanel>
-            <StackPanel x:Name="Timer" Grid.Row="1" Width="300" Height="150" HorizontalAlignment="Right" Margin="0,0,20,0">
-                <Label Content="Таймер:" FontSize="14" FontWeight="Bold"/>
-
-                <!-- Отображение времени -->
+            <StackPanel x:Name="Timer" Grid.Row="1" Width="300" Height="90" HorizontalAlignment="Right" Margin="0,0,20,0">
+                <Label Content="Таймер:" FontSize="15" FontFamily="{DynamicResource Bombardier}" Foreground="White"/>
                 <TextBox x:Name="TimeDisplay" Text="00:00.00" IsReadOnly="True" TextChanged="TimeDisplay_TextChanged"
-           FontSize="24"
-           HorizontalAlignment="Center" 
+           FontSize="24" Style="{DynamicResource TBNick}" Height="30" Width="110"
+           HorizontalAlignment="Left" 
            Margin="0,5"/>
 
                 <Grid Width="300">
-                    <Button x:Name="StartButton" Content="Запустить" 
-                HorizontalAlignment="Left" Width="80"
+                    <Button x:Name="StartButton" Content="Запустить" Style="{DynamicResource Btn}"
+                HorizontalAlignment="Left" Width="90" FontSize="14"
                 Click="StartButton_Click"/>
-                    <Button x:Name="StopButton" Content="Остановить" 
-                HorizontalAlignment="Center" Width="80"
+                    <Button x:Name="StopButton" Content="Остановить" Style="{DynamicResource Btn}"
+                HorizontalAlignment="Center" Width="90" FontSize="14"
                 Click="StopButton_Click"/>
-                    <Button x:Name="ResetButton" Content="Сбросить" 
-                HorizontalAlignment="Right" Width="80"
+                    <Button x:Name="ResetButton" Content="Сбросить" Style="{DynamicResource Btn}"
+                HorizontalAlignment="Right" Width="90" FontSize="14"
                 Click="ResetButton_Click"/>
                 </Grid>
             </StackPanel>

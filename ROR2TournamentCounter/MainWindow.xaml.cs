@@ -21,8 +21,8 @@ namespace ROR2TournamentCounter
 {
     public partial class MainWindow : Window
     {
-        private const double BaseFontSize = 50;
-        private const int BaseCharLimit = 8;
+        private const double BaseFontSize = 75;
+        private const int BaseCharLimit = 7;
         private DispatcherTimer displayTimer;
         private Stopwatch stopwatch;
         private bool isRunning;
@@ -104,8 +104,8 @@ namespace ROR2TournamentCounter
             DoubleAnimation moveMaskAnimation = new DoubleAnimation
             {
                 From = 0,
-                To = 2460,
-                Duration = TimeSpan.FromSeconds(15000),
+                To = 5000,
+                Duration = TimeSpan.FromSeconds(25000),
                 RepeatBehavior = RepeatBehavior.Forever,
                 AutoReverse = false
             };
@@ -206,7 +206,7 @@ namespace ROR2TournamentCounter
             {
                 double scaleFactor = (double)BaseCharLimit / textLength;
                 double newFontSize = BaseFontSize * scaleFactor;
-                textBox.FontSize = Math.Max(newFontSize, 27);
+                textBox.FontSize = Math.Max(newFontSize, 35);
             }
         }
 
@@ -225,7 +225,7 @@ namespace ROR2TournamentCounter
             {
                 double scaleFactor = (double)BaseCharLimit / textLength;
                 double newFontSize = BaseFontSize * scaleFactor;
-                textBox.FontSize = Math.Max(newFontSize, 27);
+                textBox.FontSize = Math.Max(newFontSize, 35);
             }
         }
 
@@ -329,11 +329,11 @@ namespace ROR2TournamentCounter
                 string minutesPart = parts[0].Split(':')[0];
                 if (minutesPart.Length >= 3)
                 {
-                    TimeDisplayed.FontSize = 30;
+                    TimeDisplayed.FontSize = 43;
                 }
                 else
                 {
-                    TimeDisplayed.FontSize = 35;
+                    TimeDisplayed.FontSize = 48;
                 }
             }
             else
@@ -345,13 +345,22 @@ namespace ROR2TournamentCounter
                     string minutesPart = timeText.Split(':')[0];
                     if (minutesPart.Length >= 3)
                     {
-                        TimeDisplayed.FontSize = 30;
+                        TimeDisplayed.FontSize = 43;
                     }
                     else
                     {
-                        TimeDisplayed.FontSize = 35;
+                        TimeDisplayed.FontSize = 48;
                     }
                 }
+            }
+        }
+
+        private void MinButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.WindowState = WindowState.Minimized;
             }
         }
     }
