@@ -22,8 +22,15 @@ namespace ROR2TournamentCounter
 
         public SettingsWindow()
         {
-            InitializeComponent();
-            InitializeTimer();
+            try
+            {
+                InitializeComponent();
+                InitializeTimer();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
 
             displayWindow = new MainWindow();
             Commando.IsChecked = true;

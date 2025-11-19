@@ -19,8 +19,15 @@ namespace ROR2TournamentCounter
         private DateTime _lastRender;
         public MainWindow()
         {
-            InitializeComponent();
-            InitializeWebView();
+            try
+            {
+                InitializeComponent();
+                InitializeWebView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
         }
 
         private void Navigation_MouseDown(object sender, MouseButtonEventArgs e)
@@ -30,10 +37,40 @@ namespace ROR2TournamentCounter
         }
         private async void InitializeWebView()
         {
-            await StreamWebView.EnsureCoreWebView2Async();
-            await Stream2WebView.EnsureCoreWebView2Async();
-        }
+            try
+            {
+                string runtimePath = System.IO.Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "WebView2Runtime"
+                );
 
+                // Используем AppData - там всегда есть права на запись
+                string userDataPath = System.IO.Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "ROR2TournamentCounter",
+                    "WebView2Data"
+                );
+
+                // Создаём папку, если её нет
+                if (!System.IO.Directory.Exists(userDataPath))
+                {
+                    System.IO.Directory.CreateDirectory(userDataPath);
+                }
+
+                var environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(
+                    browserExecutableFolder: runtimePath,
+                    userDataFolder: userDataPath
+                );
+
+                await StreamWebView.EnsureCoreWebView2Async(environment);
+                await Stream2WebView.EnsureCoreWebView2Async(environment);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка инициализации WebView2: {ex.Message}\n\n{ex.StackTrace}",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DoubleAnimation moveMaskAnimation = new DoubleAnimation
@@ -229,8 +266,6 @@ namespace ROR2TournamentCounter
                         survivorColor = Colors.Gray;
                         break;
                 }
-
-                // Применяем цвет к рамке
                 SurvivorRect.Stroke = new SolidColorBrush(survivorColor);
                 SurvivorPolygonMask.Fill = new SolidColorBrush(survivorColor);
             });
