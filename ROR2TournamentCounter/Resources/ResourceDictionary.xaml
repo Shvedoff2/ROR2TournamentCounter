@@ -128,7 +128,6 @@
                                                           ContentStringFormat="{Binding SelectionBoxItemStringFormat, RelativeSource={RelativeSource AncestorType=ComboBox}}"
                                                           HorizontalAlignment="Left"
                                                           VerticalAlignment="Center"
-                                                          Margin="8,4"
                                                           TextElement.Foreground="White"/>
 
                                             <Path Grid.Column="1"
@@ -170,6 +169,99 @@
                             </Border>
                         </Popup>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SurvivorRadioButtonStyle" TargetType="RadioButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="MainBorder"
+                            Width="80" Height="80"
+                            Background="#2d2728"
+                            BorderBrush="#888282"
+                            BorderThickness="2"
+                            Cursor="Hand">
+                        <Grid>
+                            <!-- Картинка персонажа -->
+                            <ContentPresenter x:Name="SurvivorContent"
+                                            Content="{TemplateBinding Content}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+
+                            <!-- Оверлей для выделения выбранного -->
+                            <Border x:Name="SelectionOverlay"
+                                    Background="#fbfec0"
+                                    Opacity="0"
+                                    CornerRadius="2"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!-- Состояние когда RadioButton выбрана -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#fbfec0"/>
+                            <Setter TargetName="MainBorder" Property="BorderThickness" Value="3"/>
+                        </Trigger>
+
+                        <!-- Состояние при наведении мыши -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#aaaaaa"/>
+                        </Trigger>
+
+                        <!-- Состояние при наведении на выбранную -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="True"/>
+                            </MultiTrigger.Conditions>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SurvivorRadioButtonCompactStyle" TargetType="RadioButton" BasedOn="{StaticResource SurvivorRadioButtonStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="MainBorder"
+                            Width="40" Height="40"
+                            Background="#2d2728"
+                            BorderBrush="#888282"
+                            BorderThickness="2"
+                            Cursor="Hand">
+                        <Grid>
+                            <ContentPresenter x:Name="SurvivorContent"
+                                            Content="{TemplateBinding Content}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+
+                            <Border x:Name="SelectionOverlay"
+                                    Background="#fbfec0"
+                                    Opacity="0"
+                                    CornerRadius="1"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#fbfec0"/>
+                            <Setter TargetName="MainBorder" Property="BorderThickness" Value="3"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="#aaaaaa"/>
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="True"/>
+                            </MultiTrigger.Conditions>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

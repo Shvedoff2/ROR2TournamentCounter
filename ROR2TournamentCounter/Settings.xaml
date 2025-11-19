@@ -1,0 +1,215 @@
+﻿<Window x:Class="ROR2TournamentCounter.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ROR2TournamentCounter"
+        mc:Ignorable="d"
+        Title="ROR2 Tournament Counter - Настройки" Height="350" Width="1100"
+        AllowsTransparency="True" WindowStyle="None" Background="Transparent"
+        Icon="/Resources/Images/logo.ico">
+    <Grid Background="#90000000" MouseDown="Navigation_MouseDown">
+        <Grid x:Name="Navigation" VerticalAlignment="Top" Margin="0,3,3,0">
+            <Button x:Name="MinButton" Width="30" Height="20" Content="_" Margin="0,0,30,0" HorizontalAlignment="Right" Click="MinButton_Click" FontWeight="UltraBold" Style="{DynamicResource Btn}"/>
+            <Button x:Name="CloseButton" Width="30" Height="20" Content="❌" HorizontalAlignment="Right" Click="CloseButton_Click" Style="{DynamicResource Btn}"/>
+        </Grid>
+        <Border Height="350" Width="3" Background="#70FFFFFF" HorizontalAlignment="Left"/>
+        <Border Height="350" Width="3" Background="#70FFFFFF" HorizontalAlignment="Right"/>
+        <Border Height="3" Width="1094" Background="#70FFFFFF" VerticalAlignment="Top"/>
+        <Border Height="3" Width="1094" Background="#70FFFFFF" VerticalAlignment="Bottom"/>
+        <Border Height="9" Width="3" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Border Height="3" Width="6" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,0,0,0"/>
+        <Border Height="9" Width="3" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <Border Height="3" Width="6" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="3,0,0,0"/>
+        <Border Height="9" Width="3" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Border Height="3" Width="6" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,3,0"/>
+        <Border Height="9" Width="3" Background="White" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Border Height="3" Width="6" Background="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,3,0"/>
+
+        <StackPanel Height="320" Width="350" HorizontalAlignment="Left" Margin="20,25,0,0">
+            <StackPanel x:Name="Player1">
+                <Label Content="Игрок 1:" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <TextBlock Text="Ник:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <TextBox x:Name="Nickname1" Margin="20,0,0,0" TextChanged="Nickname1_TextChanged" MaxLength="16" FontSize="15" Style="{DynamicResource TBNick}" Height="20" Width="200" HorizontalAlignment="Left"/>
+                <TextBlock Text="Twitch канал:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <StackPanel Orientation="Horizontal" Height="20" VerticalAlignment="Top" Margin="20,0,0,0">
+                    <TextBox x:Name="StreamUrlTextBox" FontSize="15"
+                     Width="200" 
+                     Margin="0,0,10,0"
+                     VerticalAlignment="Center"
+                     Text="channelname" Style="{DynamicResource TBNick}"/>
+                    <Button x:Name="LoadStreamButton" 
+                    Content="Загрузить стрим"
+                    Click="LoadStreamButton_Click"
+                    Padding="10,5"
+                    Style="{DynamicResource Btn}"/>
+                </StackPanel>
+                <TextBlock Text="Счёт:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                    <Button Content="&lt;" x:Name="DecrementButton1" Click="DecrementButton1_Click" Style="{DynamicResource Btn}" FontSize="18" Width="20"/>
+                    <TextBox x:Name="Count1" Width="50" Height="21" Text="0" TextAlignment="Center" TextChanged="Count1_TextChanged" IsReadOnly="True" FontSize="17" Style="{DynamicResource TBNick}"/>
+                    <Button Content="&gt;" x:Name="IncrementButton1" Click="IncrementButton1_Click" Style="{DynamicResource Btn}" FontSize="18" Width="20"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="Player2" Margin="0,20,0,0">
+                <Label Content="Игрок 2:" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <TextBlock Text="Ник:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <TextBox x:Name="Nickname2" Margin="20,0,0,0" TextChanged="Nickname2_TextChanged" MaxLength="16" FontSize="15" Style="{DynamicResource TBNick}" Height="20" Width="200" HorizontalAlignment="Left"/>
+                <TextBlock Text="Twitch канал:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <StackPanel Orientation="Horizontal" Height="20" VerticalAlignment="Top" Margin="20,0,0,0">
+                    <TextBox x:Name="StreamUrl2TextBox" FontSize="15"
+                        Width="200" 
+                        Margin="0,0,10,0"
+                        VerticalAlignment="Center"
+                        Text="channelname" Style="{DynamicResource TBNick}"/>
+                    <Button x:Name="LoadStream2Button" 
+                        Content="Загрузить стрим" 
+                        Click="LoadStream2Button_Click"
+                        Padding="10,5"
+                        Style="{DynamicResource Btn}"/>
+                </StackPanel>
+                <TextBlock Text="Счёт:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+                <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                    <Button Content="&lt;" x:Name="DecrementButton2" Click="DecrementButton2_Click" Style="{DynamicResource Btn}" FontSize="18" Width="20"/>
+                    <TextBox x:Name="Count2" Width="50" Height="21" Text="0" TextAlignment="Center" TextChanged="Count2_TextChanged" IsReadOnly="True" FontSize="17" Style="{DynamicResource TBNick}"/>
+                    <Button Content="&gt;" x:Name="IncrementButton2" Click="IncrementButton2_Click" Style="{DynamicResource Btn}" FontSize="18" Width="20"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel x:Name="TournamentInfo" Width="370" Height="270" Margin="390,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Label Content="Информация о турнире:" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+            <TextBlock Text="Название турнира:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+            <TextBox x:Name="TournamentName" Margin="20,0,0,0" TextChanged="TournamentName_TextChanged" MaxLength="18" FontSize="15" Style="{DynamicResource TBNick}" Height="20" Width="200" HorizontalAlignment="Left"/>
+            <TextBlock Text="Сид:" Margin="20,0,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+            <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                <Button x:Name="Generate_seed" Content="Сгенерировать сид" Style="{DynamicResource Btn}" Click="Gen_Seed_Click"/>
+                <TextBox x:Name="Seed" Margin="20,0,0,0" TextChanged="Seed_TextChanged" MaxLength="10" FontSize="15" Style="{DynamicResource TBNick}" Height="20" Width="80" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <TextBlock Text="Выживший:" Margin="20,10,0,0" FontFamily="{DynamicResource Bombardier}" FontSize="15" Foreground="White"/>
+            <UniformGrid Columns="8" Margin="20,0,0,0" x:Name="SurvivorRadioGrid" Height="130">
+                <RadioButton x:Name="Commando" GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Commando" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Commando.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Huntress" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Huntress.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Bandit" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Bandit.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="MUL-T" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/MUL-T.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Engineer" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Engineer.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Artificer" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Artificer.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Mercenary" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Mercenary.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="REX" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/REX.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Loader" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Loader.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Acrid" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Acrid.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Captain" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Captain.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Railgunner" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Railgunner.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Void Fiend" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Void_Fiend.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Seeker" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Seeker.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="False Son" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/False_Son.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="CHEF" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/CHEF.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Operator" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Operator.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Drifter" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Drifter.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="SurvivorGroup" Checked="SurvivorRadio_Checked" FontSize="15" Foreground="White" Tag="Heretic" Style="{DynamicResource SurvivorRadioButtonCompactStyle}">
+                    <RadioButton.Content>
+                        <Image Source="Resources/Images/Heretic.png"/>
+                    </RadioButton.Content>
+                </RadioButton>
+            </UniformGrid>
+        </StackPanel>
+        <StackPanel x:Name="Timer" Width="300" Height="120" HorizontalAlignment="Right" Margin="0,25,20,0" VerticalAlignment="Top">
+            <Label Content="Таймер:" FontSize="15" FontFamily="{DynamicResource Bombardier}" Foreground="White"/>
+            <TextBox x:Name="TimeDisplay" Text="00:00.00" IsReadOnly="True" TextChanged="TimeDisplay_TextChanged"
+               FontSize="24" Style="{DynamicResource TBNick}" Height="30" Width="110"
+               HorizontalAlignment="Left" 
+               Margin="0,5"/>
+
+            <Grid Width="300">
+                <Button x:Name="StartButton" Content="Запустить" Style="{DynamicResource Btn}"
+                HorizontalAlignment="Left" Width="90" FontSize="14"
+                Click="StartButton_Click"/>
+                <Button x:Name="StopButton" Content="Остановить" Style="{DynamicResource Btn}"
+                HorizontalAlignment="Center" Width="90" FontSize="14"
+                Click="StopButton_Click"/>
+                <Button x:Name="ResetButton" Content="Сбросить" Style="{DynamicResource Btn}"
+                HorizontalAlignment="Right" Width="90" FontSize="14"
+                Click="ResetButton_Click"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Button x:Name="ShowDisplayButton" Content="Показать окно отображения" Style="{DynamicResource Btn}" 
+                    Margin="10" Padding="15,8" FontSize="16" Click="ShowDisplayButton_Click"/>
+            <Button x:Name="HideDisplayButton" Content="Скрыть окно отображения" Style="{DynamicResource Btn}" 
+                    Margin="10" Padding="15,8" FontSize="16" Click="HideDisplayButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

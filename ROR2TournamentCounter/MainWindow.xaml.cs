@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
-using System.Windows.Threading;
 using System.Windows.Media.Animation;
-using System.Diagnostics;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace ROR2TournamentCounter
 {
@@ -23,82 +14,26 @@ namespace ROR2TournamentCounter
     {
         private const double BaseFontSize = 75;
         private const int BaseCharLimit = 7;
-        private DispatcherTimer displayTimer;
-        private Stopwatch stopwatch;
-        private bool isRunning;
+        private double _maskOffsetX = 0; // смещение паттерна
+        private const double Speed = 100; // пикселей в секунду (регулируй под себя)
+        private DateTime _lastRender;
         public MainWindow()
         {
             InitializeComponent();
-            InitializeTimer();
-            Survivor.SelectedIndex = 0;
+            InitializeWebView();
         }
-        private void InitializeTimer()
+
+        private void Navigation_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            stopwatch = new Stopwatch();
-            displayTimer = new DispatcherTimer();
-            displayTimer.Interval = TimeSpan.FromMilliseconds(20);
-            displayTimer.Tick += DisplayTimer_Tick;
-
-            isRunning = false;
-            UpdateTimeDisplay();
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
-
-        private void DisplayTimer_Tick(object sender, EventArgs e)
+        private async void InitializeWebView()
         {
-            UpdateTimeDisplay();
+            await StreamWebView.EnsureCoreWebView2Async();
+            await Stream2WebView.EnsureCoreWebView2Async();
         }
 
-        private void UpdateTimeDisplay()
-        {
-            var elapsed = stopwatch.Elapsed;
-            int totalMinutes = (int)elapsed.TotalMinutes;
-            int seconds = elapsed.Seconds;
-            int milliseconds = elapsed.Milliseconds / 10;
-            string fullTime = $"{totalMinutes:D2}:{seconds:D2}.{milliseconds:D2}";
-            TimeDisplay.Text = fullTime;
-        }
-
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!isRunning)
-            {
-                stopwatch.Start();
-                displayTimer.Start();
-                isRunning = true;
-                StartButton.IsEnabled = false;
-                StopButton.IsEnabled = true;
-            }
-        }
-
-        private void StopButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (isRunning)
-            {
-                stopwatch.Stop();
-                displayTimer.Stop();
-                isRunning = false;
-                StartButton.IsEnabled = true;
-                StopButton.IsEnabled = false;
-            }
-        }
-
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
-        {
-            stopwatch.Stop();
-            displayTimer.Stop();
-            isRunning = false;
-
-            stopwatch.Reset();
-            UpdateTimeDisplay();
-
-            StartButton.IsEnabled = true;
-            StopButton.IsEnabled = true;
-        }
-        protected override void OnClosed(EventArgs e)
-        {
-            displayTimer?.Stop();
-            base.OnClosed(e);
-        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DoubleAnimation moveMaskAnimation = new DoubleAnimation
@@ -113,236 +48,19 @@ namespace ROR2TournamentCounter
             MaskTranslateTransform.BeginAnimation(TranslateTransform.XProperty, moveMaskAnimation);
         }
 
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        // Методы для обновления отображения из окна настроек
+        public void UpdateTimeDisplay(string timeText)
         {
-            this.Close();
-        }
-
-        private void Navigation_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
-        }
-
-        private void Nickname1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Nickname1Player.Text = Nickname1.Text;
-        }
-
-        private void Nickname2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Nickname2Player.Text = Nickname2.Text;
-        }
-
-        private void TournamentName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TournamentNameTB.Text = TournamentName.Text;
-        }
-
-        private void Seed_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            SeedTB.Text = $"Сид:{Seed.Text}";
-        }
-
-        private void DecrementButton1_Click(object sender, RoutedEventArgs e)
-        {
-            int currentValue = int.Parse(Count1.Text);
-            if (currentValue > 0)
+            Dispatcher.Invoke(() =>
             {
-                Count1.Text = (currentValue - 1).ToString();
-            }
-        }
+                TimeDisplay.Text = timeText;
 
-        private void IncrementButton1_Click(object sender, RoutedEventArgs e)
-        {
-            int currentValue = int.Parse(Count1.Text);
-            if (currentValue < 5)
-            {
-                Count1.Text = (currentValue + 1).ToString();
-            }
-        }
-
-        private void DecrementButton2_Click(object sender, RoutedEventArgs e)
-        {
-            int currentValue = int.Parse(Count2.Text);
-            if (currentValue > 0)
-            {
-                Count2.Text = (currentValue - 1).ToString();
-            }
-        }
-
-        private void IncrementButton2_Click(object sender, RoutedEventArgs e)
-        {
-            int currentValue = int.Parse(Count2.Text);
-            if (currentValue < 5)
-            {
-                Count2.Text = (currentValue + 1).ToString();
-            }
-        }
-
-        private void Count1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CountPlayer1.Text = Count1.Text;
-        }
-
-        private void Count2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CountPlayer2.Text = Count2.Text;
-        }
-
-        private void Nickname1Player_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            if (textBox == null) return;
-
-            int textLength = textBox.Text.Length;
-
-            if (textLength <= BaseCharLimit)
-            {
-                textBox.FontSize = BaseFontSize;
-            }
-            else
-            {
-                double scaleFactor = (double)BaseCharLimit / textLength;
-                double newFontSize = BaseFontSize * scaleFactor;
-                textBox.FontSize = Math.Max(newFontSize, 35);
-            }
-        }
-
-        private void Nickname2Player_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            if (textBox == null) return;
-
-            int textLength = textBox.Text.Length;
-
-            if (textLength <= BaseCharLimit)
-            {
-                textBox.FontSize = BaseFontSize;
-            }
-            else
-            {
-                double scaleFactor = (double)BaseCharLimit / textLength;
-                double newFontSize = BaseFontSize * scaleFactor;
-                textBox.FontSize = Math.Max(newFontSize, 35);
-            }
-        }
-
-        private void Survivor_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            if (comboBox?.SelectedItem == null) return;
-
-            string selectedSurvivor = (comboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-
-            System.Windows.Media.Color survivorColor = Colors.Gray;
-
-            switch (selectedSurvivor)
-            {
-                case "Acrid":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Acrid.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#962e7b");
-                    break;
-                case "Artificer":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Artificer.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#ffffff");
-                    break;
-                case "Bandit":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Bandit.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#29d7d6");
-                    break;
-                case "Captain":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Captain.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#213c73");
-                    break;
-                case "CHEF":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CHEF.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#94a3e7");
-                    break;
-                case "Commando":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Commando.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#e7b44a");
-                    break;
-                case "Engineer":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Engineer.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#650ee9");
-                    break;
-                case "False Son":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/False_Son.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#7c73b2");
-                    break;
-                case "Heretic":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Heretic.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#7b0008");
-                    break;
-                case "Huntress":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Huntress.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#d61d63");
-                    break;
-                case "Loader":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Loader.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#035ac6");
-                    break;
-                case "Mercenary":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Mercenary.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#00ecf8");
-                    break;
-                case "MUL-T":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/MUL-T.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#d8d984");
-                    break;
-                case "Railgunner":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Railgunner.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#63569d");
-                    break;
-                case "REX":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/REX.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#a5ff21");
-                    break;
-                case "Seeker":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Seeker.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#54c3ad");
-                    break;
-                case "Void Fiend":
-                    SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Void_Fiend.png"));
-                    survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#ca4add");
-                    break;
-                default:
-                    SurvivorPic.Source = null;
-                    survivorColor = Colors.Gray;
-                    break;
-            }
-            // Применяем цвет к рамке
-            SurvivorRect.Stroke = new SolidColorBrush(survivorColor);
-            SurvivorPolygonMask.Fill = new SolidColorBrush(survivorColor);
-        }
-
-        private void TimeDisplay_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string timeText = TimeDisplay.Text;
-            if (timeText.Contains("."))
-            {
-                string[] parts = timeText.Split('.');
-                MinutesSecondsRun.Text = parts[0];
-                DotMillisecondsRun.Text = "." + parts[1];
-                string minutesPart = parts[0].Split(':')[0];
-                if (minutesPart.Length >= 3)
+                if (timeText.Contains("."))
                 {
-                    TimeDisplayed.FontSize = 43;
-                }
-                else
-                {
-                    TimeDisplayed.FontSize = 48;
-                }
-            }
-            else
-            {
-                MinutesSecondsRun.Text = timeText;
-                DotMillisecondsRun.Text = ".00";
-                if (timeText.Contains(":"))
-                {
-                    string minutesPart = timeText.Split(':')[0];
+                    string[] parts = timeText.Split('.');
+                    MinutesSecondsRun.Text = parts[0];
+                    DotMillisecondsRun.Text = "." + parts[1];
+                    string minutesPart = parts[0].Split(':')[0];
                     if (minutesPart.Length >= 3)
                     {
                         TimeDisplayed.FontSize = 43;
@@ -352,17 +70,212 @@ namespace ROR2TournamentCounter
                         TimeDisplayed.FontSize = 48;
                     }
                 }
+                else
+                {
+                    MinutesSecondsRun.Text = timeText;
+                    DotMillisecondsRun.Text = ".00";
+                    if (timeText.Contains(":"))
+                    {
+                        string minutesPart = timeText.Split(':')[0];
+                        if (minutesPart.Length >= 3)
+                        {
+                            TimeDisplayed.FontSize = 43;
+                        }
+                        else
+                        {
+                            TimeDisplayed.FontSize = 48;
+                        }
+                    }
+                }
+            });
+        }
+
+        public void UpdateNickname1(string nickname)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Nickname1Player.Text = nickname;
+                UpdateNicknameFont(Nickname1Player);
+            });
+        }
+
+        public void UpdateNickname2(string nickname)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Nickname2Player.Text = nickname;
+                UpdateNicknameFont(Nickname2Player);
+            });
+        }
+
+        public void UpdateTournamentName(string name)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TournamentNameTB.Text = name;
+            });
+        }
+
+        public void UpdateSeed(string seed)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                SeedTB.Text = seed;
+            });
+        }
+
+        public void UpdateCount1(string count)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                CountPlayer1.Text = count;
+            });
+        }
+
+        public void UpdateCount2(string count)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                CountPlayer2.Text = count;
+            });
+        }
+
+        public void UpdateSurvivor(string selectedSurvivor)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                System.Windows.Media.Color survivorColor = Colors.Gray;
+
+                switch (selectedSurvivor)
+                {
+                    case "Acrid":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Acrid.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#541a45");
+                        break;
+                    case "Artificer":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Artificer.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#a9a9a9");
+                        break;
+                    case "Bandit":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Bandit.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#177978");
+                        break;
+                    case "Captain":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Captain.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#132240");
+                        break;
+                    case "CHEF":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/CHEF.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#535b82");
+                        break;
+                    case "Commando":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Commando.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#826529");
+                        break;
+                    case "Engineer":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Engineer.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#390882");
+                        break;
+                    case "False Son":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/False_Son.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#464064");
+                        break;
+                    case "Heretic":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Heretic.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#450004");
+                        break;
+                    case "Huntress":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Huntress.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#781038");
+                        break;
+                    case "Loader":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Loader.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#02326f");
+                        break;
+                    case "Mercenary":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Mercenary.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#02326f");
+                        break;
+                    case "MUL-T":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/MUL-T.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#797a4a");
+                        break;
+                    case "Railgunner":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Railgunner.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#383058");
+                        break;
+                    case "REX":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/REX.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#5d8f13");
+                        break;
+                    case "Seeker":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Seeker.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#2f6d61");
+                        break;
+                    case "Void Fiend":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Void_Fiend.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#71297c");
+                        break;
+                    case "Operator":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Operator.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#025d51");
+                        break;
+                    case "Drifter":
+                        SurvivorPic.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Drifter.png"));
+                        survivorColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#974209");
+                        break;
+                    default:
+                        SurvivorPic.Source = null;
+                        survivorColor = Colors.Gray;
+                        break;
+                }
+
+                // Применяем цвет к рамке
+                SurvivorRect.Stroke = new SolidColorBrush(survivorColor);
+                SurvivorPolygonMask.Fill = new SolidColorBrush(survivorColor);
+            });
+        }
+
+        public void LoadTwitchStream(string channelName)
+        {
+            try
+            {
+                string embedUrl = $"https://player.twitch.tv/?channel={channelName}&parent=localhost&muted=false&autoplay=true";
+                StreamWebView.CoreWebView2.Navigate(embedUrl);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки стрима: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void MinButton_Click(object sender, RoutedEventArgs e)
+        public void Load2TwitchStream(string channelName)
         {
-            Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
+            try
             {
-                parentWindow.WindowState = WindowState.Minimized;
+                string embedUrl = $"https://player.twitch.tv/?channel={channelName}&parent=localhost&muted=false&autoplay=true";
+                Stream2WebView.CoreWebView2.Navigate(embedUrl);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки стрима: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UpdateNicknameFont(TextBox textBox)
+        {
+            int textLength = textBox.Text.Length;
+
+            if (textLength <= BaseCharLimit)
+            {
+                textBox.FontSize = BaseFontSize;
+            }
+            else
+            {
+                double scaleFactor = (double)BaseCharLimit / textLength;
+                double newFontSize = BaseFontSize * scaleFactor;
+                textBox.FontSize = Math.Max(newFontSize, 35);
             }
         }
     }
-
 }
